@@ -61,16 +61,36 @@
 
         };
 
+        // Funzione per normalizzare la stringa di ricerca
+        function normalizzaRicerca(input) {
+            return input.toLowerCase().trim().split(' ').sort().join(' ');
+        }
+
         function cercaTelefono() {
             const input = document.getElementById('searchInput').value.trim();
             const resultDiv = document.getElementById('result');
 
-            if (rubrica[input]) {
-                resultDiv.textContent = `Numero di telefono: ${rubrica[input]}`;
-            } else {
+            // Normalizza l'input dell'utente
+            const inputNormalizzato = normalizzaRicerca(input);
+
+            // Cerca nel dizionario
+            let trovato = false;
+            for (const nome in rubrica) {
+                const nomeNormalizzato = normalizzaRicerca(nome);
+                if (nomeNormalizzato === inputNormalizzato) {
+                    resultDiv.textContent = `Numero di telefono: ${rubrica[nome]}`;
+                    trovato = true;
+                    break;
+                }
+            }
+
+            if (!trovato) {
                 resultDiv.textContent = "Nome non trovato.";
             }
         }
     </script>
+</body>
+</html>
+
 </body>
 </html>
